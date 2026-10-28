@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050505">
+<title>Iheb & Chanaz — Invitation de mariage</title>
+<style>
+:root {
+  --site-primary: #d6b779;
+  --site-on-primary: #ffffff;
+  --site-secondary: #171717;
+  --site-on-secondary: #f4f0e8;
+  --site-background: #050505;
+  --site-on-background: #f4f0e8;
+  --site-font-body: "Trebuchet MS", Arial, sans-serif;
+  --site-font-heading: Georgia, "Times New Roman", serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--site-font-body); background: var(--site-background); color: var(--site-on-background); }
+body.intro-active { overflow: hidden; }
+#site-root { min-height: 100vh; width: 100%; background-color: var(--site-background); color: var(--site-on-background); border-radius: 0; overflow: hidden; }
+.hero { min-height: 100vh; position: relative; display: grid; place-items: center; padding: calc(30px * var(--site-spacing-scale)); text-align: center; background: radial-gradient(ellipse at 50% 18%, #202020 0%, #080808 48%, #000000 100%); }
+.frame { position: absolute; inset: 20px; border: 1px solid color-mix(in srgb, var(--site-primary), transparent 45%); pointer-events: none; }
+.frame:before, .frame:after { content: "✦"; position: absolute; color: var(--site-primary); font-size: 20px; opacity: var(--site-decoration-opacity); }
+.frame:before { top: -11px; left: 50%; transform: translateX(-50%); background: #080808; padding: 0 12px; }
+.frame:after { bottom: -11px; left: 50%; transform: translateX(-50%); background: #080808; padding: 0 12px; }
+.content { max-width: 760px; position: relative; z-index: 1; }
+.eyebrow { text-transform: uppercase; letter-spacing: .28em; font-size: 11px; color: var(--site-primary); }
+.monogram { width: 70px; height: 70px; margin: 24px auto; border: 1px solid var(--site-primary); border-radius: 50%; display: grid; place-items: center; font-family: var(--site-font-heading); color: var(--site-primary); font-size: 25px; }
+h1, h2 { font-family: var(--site-font-heading); font-weight: 400; }
+h1 { font-size: clamp(44px, 9vw, 86px); line-height: 1.02; margin: 10px 0 18px; letter-spacing: -.045em; }
+.amp { color: var(--site-primary); font-style: italic; font-size: .78em; }
+.subtitle { max-width: 460px; margin: 0 auto; line-height: 1.9; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+.date { margin: 28px auto 8px; font-family: var(--site-font-heading); font-size: clamp(20px, 4vw, 28px); }
+.time { color: var(--site-primary); letter-spacing: .2em; font-size: 12px; }
+.button { display: inline-flex; justify-content: center; align-items: center; min-height: 46px; margin-top: 28px; padding: 0 24px; background: var(--site-primary); color: var(--site-on-primary); text-decoration: none; border: 1px solid var(--site-primary); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; cursor: pointer; transition: transform .2s, opacity .2s; }
+.button:hover { transform: translateY(-2px); opacity: .9; }
+section { padding: 76px 22px; text-align: center; }
+section h2 { font-size: clamp(32px, 6vw, 48px); margin: 12px 0 18px; }
+.lead { max-width: 540px; margin: 0 auto; line-height: 1.9; font-size: 15px; }
+.details { background: #101010; }
+.detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 850px; margin: 38px auto 0; border-top: 1px solid #403522; border-bottom: 1px solid #403522; }
+.detail { padding: 28px 14px; }
+.detail + .detail { border-left: 1px solid #403522; }
+.detail .symbol { color: var(--site-primary); font-size: 22px; }
+.detail h3 { font: 400 20px var(--site-font-heading); margin: 12px 0 8px; }
+.detail p { margin: 0; font-size: 13px; line-height: 1.7; }
+.countdown { display: flex; justify-content: center; gap: clamp(12px, 4vw, 32px); margin: 30px auto 0; }
+.unit { min-width: 58px; }
+.number { font: 400 clamp(30px, 6vw, 46px) var(--site-font-heading); color: var(--site-primary); }
+.unit small { display: block; text-transform: uppercase; letter-spacing: .15em; font-size: 9px; margin-top: 6px; }
+.rsvp { background: var(--site-background); }
+.rsvp-box { max-width: 600px; margin: 28px auto 0; padding: 30px 22px; border: 1px solid #403522; }
+.rsvp-box p { line-height: 1.8; }
+footer { text-align: center; padding: 25px; background: #101010; color: #d6b779; font: italic 18px var(--site-font-heading); }
+
+/* Black-and-gold invitation opening animation */
+.intro-screen {
+  position: fixed; inset: 0; z-index: 2147483647; display: grid; place-items: center;
+  overflow: hidden; padding: 28px; text-align: center; cursor: pointer;
+  color: #f4f0e8; background: radial-gradient(ellipse at 50% 42%, #1b1b1b 0%, #080808 52%, #000 100%);
+  transition: opacity 1s ease, visibility 1s ease;
+}
+.intro-screen::before { content: ""; position: absolute; width: min(72vw, 520px); aspect-ratio: 1; border: 1px solid rgba(214,183,121,.12); border-radius: 50%; animation: halo 7s ease-in-out infinite; }
+.intro-frame { position: absolute; inset: 20px; border: 1px solid rgba(214,183,121,.55); opacity: 0; animation: frameReveal 1.4s .25s ease forwards; }
+.intro-frame::before, .intro-frame::after { content: "✦"; position: absolute; left: 50%; transform: translateX(-50%); color: #d6b779; background: #080808; padding: 0 13px; font-size: 17px; }
+.intro-frame::before { top: -10px; } .intro-frame::after { bottom: -10px; }
+.intro-content { position: relative; z-index: 2; width: min(100%, 620px); animation: contentReveal 1.5s .15s both; }
+.intro-kicker { color: #d6b779; text-transform: uppercase; letter-spacing: .32em; font-size: 10px; }
+.intro-seal { width: 68px; height: 68px; margin: 28px auto 22px; display: grid; place-items: center; border: 1px solid #d6b779; border-radius: 50%; color: #d6b779; font: 25px Georgia,serif; box-shadow: 0 0 28px rgba(214,183,121,.08); }
+.intro-seal span { font-size: 14px; }
+.intro-names { font: clamp(42px, 8vw, 76px)/1.05 Georgia,serif; letter-spacing: -.04em; }
+.intro-names em { color: #d6b779; font-weight: 400; }
+.intro-rule { width: 54px; height: 1px; margin: 28px auto 20px; background: #d6b779; animation: ruleGrow 1.2s .8s both; }
+.intro-date { color: #d6b779; letter-spacing: .28em; font-size: 11px; }
+.intro-enter { margin-top: 38px; padding: 14px 23px; border: 1px solid rgba(214,183,121,.8); background: transparent; color: #f4f0e8; font: 10px var(--site-font-body); letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: background .25s, color .25s, transform .25s; }
+.intro-enter span { margin-left: 12px; color: #d6b779; }
+.intro-enter:hover, .intro-enter:focus-visible { background: #d6b779; color: #050505; transform: translateY(-2px); outline: none; }
+.intro-enter:hover span { color: #050505; }
+.intro-hint { margin-top: 22px; font-size: 9px; letter-spacing: .2em; color: #8f887c; text-transform: uppercase; }
+.intro-sparkle { position: absolute; color: #d6b779; opacity: .5; animation: twinkle 3s ease-in-out infinite; }
+.sparkle-one { top: 20%; left: 18%; font-size: 17px; } .sparkle-two { right: 17%; bottom: 21%; font-size: 23px; animation-delay: 1.2s; }
+.intro-screen.is-opening { opacity: 0; visibility: hidden; pointer-events: none; }
+#site-root { background: #050505; }
+.hero { color: #f4f0e8; }
+section { color: #f4f0e8; background: #050505; }
+.details { background: #101010; }
+.rsvp { background: #080808; }
+footer { background: #101010; }
+@keyframes contentReveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes frameReveal { to { opacity: 1; } }
+@keyframes ruleGrow { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+@keyframes halo { 0%,100% { transform: scale(.96); opacity: .55; } 50% { transform: scale(1.04); opacity: 1; } }
+@keyframes twinkle { 0%,100% { opacity: .2; transform: scale(.8) rotate(0); } 50% { opacity: .85; transform: scale(1.15) rotate(25deg); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+
+@media (max-width: 600px) { .frame { inset: 12px; } .detail-grid { grid-template-columns: 1fr; } .detail + .detail { border-left: 0; border-top: 1px solid #403522; } section { padding: 58px 20px; } }
+@media (prefers-color-scheme: dark) { body, #site-root { background: #050505; color: #f4f0e8; } }
+</style>
+</head>
+<body>
+<div class="intro-screen" id="introScreen" role="group" aria-label="Écran d’accueil du faire-part de mariage">
+  <div class="intro-frame" aria-hidden="true"></div>
+  <div class="intro-content">
+    <div class="intro-kicker">Vous êtes chaleureusement invités</div>
+    <div class="intro-seal">I <span>&</span> C</div>
+    <div class="intro-names">Iheb <em>&</em> Chanaz</div>
+    <div class="intro-rule"></div>
+    <div class="intro-date">18 · 12 · 2026</div>
+    <button class="intro-enter" id="enterInvitation" type="button">Toucher pour entrer <span aria-hidden="true">↗</span></button>
+    <div class="intro-hint">Une célébration de l’amour</div>
+  </div>
+  <div class="intro-sparkle sparkle-one" aria-hidden="true">✦</div>
+  <div class="intro-sparkle sparkle-two" aria-hidden="true">✧</div>
+</div>
+<div id="site-root">
+  <main>
+    <header class="hero">
+      <div class="frame" aria-hidden="true"></div>
+      <div class="content">
+        <div class="eyebrow">Entourés de leurs familles</div>
+        <div class="monogram" aria-hidden="true">I <span style="font-size:15px">&</span> C</div>
+        <h1>Iheb <span class="amp">&</span><br>Chanaz</h1>
+        <p class="subtitle">ont la joie de vous inviter à célébrer le début de leur belle histoire</p>
+        <div class="date">Vendredi 18 décembre 2026</div>
+        <div class="time">20 h 00 · CARTHAGE, TUNISIE</div>
+        <a class="button" href="#celebration">Découvrir le faire-part</a>
+      </div>
+    </header>
+    <section id="celebration">
+      <div class="eyebrow">Un jour inoubliable</div>
+      <h2>Deux cœurs, une belle histoire</h2>
+      <p class="lead">C’est avec amour et bonheur qu’Iheb et Chanaz vous invitent à partager une soirée exceptionnelle à l’occasion de leur mariage. Votre présence rendra ce moment encore plus précieux.</p>
+      <div class="countdown" aria-label="Compte à rebours avant le mariage">
+        <div class="unit"><div class="number" id="days">—</div><small>Jours</small></div>
+        <div class="unit"><div class="number" id="hours">—</div><small>Heures</small></div>
+        <div class="unit"><div class="number" id="minutes">—</div><small>Minutes</small></div>
+        <div class="unit"><div class="number" id="seconds">—</div><small>Secondes</small></div>
+      </div>
+    </section>
+    <section class="details" id="details">
+      <div class="eyebrow">Nous serions heureux de vous accueillir</div>
+      <h2>La célébration</h2>
+      <div class="detail-grid">
+        <div class="detail"><div class="symbol" aria-hidden="true">✧</div><h3>La date</h3><p>Vendredi<br>18 décembre 2026</p></div>
+        <div class="detail"><div class="symbol" aria-hidden="true">◷</div><h3>L’heure</h3><p>20 h 00</p></div>
+        <div class="detail"><div class="symbol" aria-hidden="true">⌖</div><h3>Le lieu</h3><p>Dar Bouraoui<br>Carthage, Tunisie</p></div>
+      </div>
+      <a class="button" href="https://www.google.com/maps/search/?api=1&query=Dar+Bouraoui+Carthage+Tunisia" target="_blank" rel="noopener">Voir l’itinéraire</a>
+    </section>
+    <section class="rsvp" id="rsvp">
+      <div class="eyebrow">Merci de nous répondre</div>
+      <h2>Serez-vous parmi nous ?</h2>
+      <div class="rsvp-box">
+        <p>Nous serions ravis de partager cette journée unique avec vous. Merci de confirmer votre présence auprès des mariés.</p>
+        <a class="button" href="https://forms.google.com/" target="_blank" rel="noopener">Lien de confirmation à ajouter</a>
+        <p style="font-size:11px;color:var(--site-primary)">Le lien de confirmation pourra être remplacé par le formulaire des mariés.</p>
+      </div>
+    </section>
+  </main>
+  <footer>Avec tout notre amour, Iheb & Chanaz</footer>
+</div>
+<script>
+(function () {
+  const intro = document.getElementById('introScreen');
+  const enterButton = document.getElementById('enterInvitation');
+  let hasEntered = false;
+  document.body.classList.add('intro-active');
+
+  function enterInvitation() {
+    if (hasEntered) return;
+    hasEntered = true;
+    intro.classList.add('is-opening');
+    document.body.classList.remove('intro-active');
+    window.setTimeout(function () {
+      intro.hidden = true;
+      intro.style.display = 'none';
+    }, 1050);
+  }
+
+  // The button is the main entry action; tapping the surrounding screen also works.
+  enterButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    enterInvitation();
+  });
+  intro.addEventListener('click', enterInvitation);
+  enterButton.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      enterInvitation();
+    }
+  });
+  const weddingDate = new Date('2026-12-18T20:00:00+01:00').getTime();
+  function updateCountdown() {
+    const diff = Math.max(0, weddingDate - Date.now());
+    const values = {
+      days: Math.floor(diff / 86400000),
+      hours: Math.floor((diff % 86400000) / 3600000),
+      minutes: Math.floor((diff % 3600000) / 60000),
+      seconds: Math.floor((diff % 60000) / 1000)
+    };
+    Object.entries(values).forEach(([id, value]) => {
+      const node = document.getElementById(id);
+      if (node) node.textContent = String(value).padStart(2, '0');
+    });
+  }
+  updateCountdown();
+  window.setInterval(updateCountdown, 1000);
+})();
+</script>
+</body>
+</html>
